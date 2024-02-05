@@ -1,11 +1,3 @@
-// Встановіть правильні типи пропсів для цього компонента.У ньому є дві властивості: children
-// і onContentEndVisible.children - це будь - який валідний
-// React вузол, а onContentEndVisible - це функція без аргументів, що повертає void.
-
-// Встановіть правильний тип useRef. Посилання endContentRef використовується для div, який міститься в кінці вмісту.
-
-// Встановіть правильний тип для options(клас також може бути типом для options).
-
 import React, { useEffect, useRef } from "react";
 type Props = {
   children: React.ReactElement;
