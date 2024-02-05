@@ -1,42 +1,67 @@
-import React, {useReducer} from "react";
+// Ваше завдання додати типи для наступних елементів коду:
+// RequestStep: Це рядковий літерал.
+// State: Цей тип являє собою об'єкт з двома властивостями isRequestInProgress і RequestStep
+// Action: Це тип, що представляє можливі дії, які можуть бути відправлені до редюсера.
+
+// Дивіться код і опишіть для нього правильні типи.
+
+import React, { useReducer } from "react";
+// Для type State потрібно уточнити які значення може мати властівість requestStep, просто string буде недостатньо)
+// type State = {
+// ...
+// requestStep: ... | ... | ... | ...;
+// }
+type State = {
+  isRequestInProgress: boolean;
+  requestStep: "start" | "pending" | "finished" | "idle";
+};
+// Так само для type Action потрібно описати всі можливі варіанти властивості type.
+type Action =
+  | { type: "START_REQUEST" }
+  | { type: "PENDING_REQUEST" }
+  | { type: "FINISH_REQUEST" }
+  | { type: "RESET_REQUEST" };
 
 const initialState: State = {
   isRequestInProgress: false,
-  requestStep: 'idle',
+  requestStep: "idle",
 };
 
 function requestReducer(state: State, action: Action): State {
   switch (action.type) {
-    case 'START_REQUEST':
-      return { ...state, isRequestInProgress: true, requestStep: 'start' };
-    case 'PENDING_REQUEST':
-      return { ...state, isRequestInProgress: true, requestStep: 'pending' };
-    case 'FINISH_REQUEST':
-      return { ...state, isRequestInProgress: false, requestStep: 'finished' };
-    case 'RESET_REQUEST':
-      return { ...state, isRequestInProgress: false, requestStep: 'idle' };
+    case "START_REQUEST":
+      return { ...state, isRequestInProgress: true, requestStep: "start" };
+    case "PENDING_REQUEST":
+      return { ...state, isRequestInProgress: true, requestStep: "pending" };
+    case "FINISH_REQUEST":
+      return { ...state, isRequestInProgress: false, requestStep: "finished" };
+    case "RESET_REQUEST":
+      return { ...state, isRequestInProgress: false, requestStep: "idle" };
     default:
       return state;
   }
 }
 
 export function RequestComponent() {
-  const [requestState, requestDispatch] = useReducer(requestReducer, initialState);
+  const [requestState, requestDispatch] = useReducer(
+    requestReducer,
+    initialState
+  );
 
   const startRequest = () => {
-    requestDispatch({ type: 'START_REQUEST' });
+    requestDispatch({ type: "START_REQUEST" });
     // Імітуємо запит до сервера
     setTimeout(() => {
-      requestDispatch({ type: 'PENDING_REQUEST' });
+      requestDispatch({ type: "PENDING_REQUEST" });
       // Імітуємо отримання відповіді від сервера
       setTimeout(() => {
-        requestDispatch({ type: 'FINISH_REQUEST' });
+        requestDispatch({ type: "FINISH_REQUEST" });
       }, 2000);
     }, 2000);
   };
 
   const resetRequest = () => {
-    requestDispatch({ type: 'RESET_REQUEST' });
+    requestDispatch({ type: "RESET_REQUEST" });
   };
 
   return (
